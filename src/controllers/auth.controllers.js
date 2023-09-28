@@ -3,7 +3,7 @@ import {
   createUserDB,
   findUserByEmailDB,
   createSessionDB,
-} from "../repositories/auth.repository.js";
+} from "../repositories/users.repository.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
