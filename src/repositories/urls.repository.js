@@ -13,5 +13,16 @@ export function findShortUrlIdDB(shortUrl) {
 }
 
 export function findUrlsByIdDB(id) {
-  return db.query(`SELECT id, "shortUrl", url FROM urls WHERE id = $1;`, [id]);
+  return db.query(`SELECT * FROM urls WHERE id = $1;`, [id]);
+}
+
+export function verificUrlUserDB(id, userId) {
+  return db.query(`SELECT * FROM urls WHERE id = $1 AND "userId" <> $2;`, [
+    id,
+    userId,
+  ]);
+}
+
+export function deleteUrlsByIdDB(id) {
+  return db.query(`DELETE FROM urls WHERE id = $1;`, [id]);
 }
