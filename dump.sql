@@ -62,8 +62,7 @@ CREATE TABLE public.urls (
     "userId" integer NOT NULL,
     "shortUrl" character varying(10) NOT NULL,
     url text NOT NULL,
-    "linksCount" integer NOT NULL,
-    "visitCount" integer NOT NULL,
+    "visitCount" integer DEFAULT 0,
     "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
@@ -149,12 +148,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 INSERT INTO public.sessions VALUES (1, 1, 'Henrique1', 'e3e875a2-7674-4529-ad17-b277f6342f43', '2023-09-28 14:47:14.097978');
 INSERT INTO public.sessions VALUES (2, 1, 'Henrique1', '6517e059-783c-4ff4-b777-8213f313011e', '2023-09-28 14:47:56.033468');
 INSERT INTO public.sessions VALUES (3, 1, 'Henrique1', '8acc98eb-7147-4f01-8e06-c8076b275063', '2023-09-28 14:48:01.848528');
+INSERT INTO public.sessions VALUES (4, 1, 'Henrique1', '6a58c514-b3f7-4afc-890b-bf20da860f5f', '2023-09-28 15:36:44.623864');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 1, 'OzIE6sC7', 'https://link1.com.br', 0, '2023-09-28 23:23:09.934051');
 
 
 --
@@ -170,14 +171,14 @@ INSERT INTO public.users VALUES (3, 'Henrique3', 'henrique3@driven.com.br', '$2b
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 3, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 4, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 1, true);
 
 
 --
