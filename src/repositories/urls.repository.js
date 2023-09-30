@@ -8,8 +8,8 @@ export function createUrlsDB(userId, shortUrl, url) {
   );
 }
 
-export function findShortUrlIdDB(shortUrl) {
-  return db.query(`SELECT id FROM urls WHERE "shortUrl" = $1;`, [shortUrl]);
+export function findShortUrlDB(shortUrl) {
+  return db.query(`SELECT * FROM urls WHERE "shortUrl" = $1;`, [shortUrl]);
 }
 
 export function findUrlsByIdDB(id) {
@@ -25,4 +25,11 @@ export function verificUrlUserDB(id, userId) {
 
 export function deleteUrlsByIdDB(id) {
   return db.query(`DELETE FROM urls WHERE id = $1;`, [id]);
+}
+
+export function updateVisitCountDB(visitCount, shortUrl) {
+  return db.query(`UPDATE urls SET "visitCount" = $1 WHERE "shortUrl" = $2;`, [
+    visitCount + 1,
+    shortUrl,
+  ]);
 }

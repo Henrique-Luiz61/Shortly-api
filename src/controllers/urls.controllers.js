@@ -2,10 +2,11 @@ import { nanoid } from "nanoid";
 import { findSessionByTokenDB } from "../repositories/users.repository.js";
 import {
   createUrlsDB,
-  findShortUrlIdDB,
+  findShortUrlDB,
   findUrlsByIdDB,
   verificUrlUserDB,
   deleteUrlsByIdDB,
+  updateVisitCountDB,
 } from "../repositories/urls.repository.js";
 
 export async function postUrls(req, res) {
@@ -28,7 +29,7 @@ export async function postUrls(req, res) {
 
     await createUrlsDB(session.rows[0].userId, shortUrl, url);
 
-    const shortUrlId = await findShortUrlIdDB(shortUrl);
+    const shortUrlId = await findShortUrlDB(shortUrl);
 
     res.status(201).send({ id: shortUrlId.rows[0].id, shortUrl });
   } catch (err) {
@@ -87,6 +88,23 @@ export async function deleteUrls(req, res) {
     await deleteUrlsByIdDB(id);
 
     res.status(204).send({ message: "Links deleted successfully!" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+export async function getOpenShortUrl(req, res) {
+  const { shortUrl } = req.params;
+
+  try {
+    const links = await findShortUrlDB(shortUrl);
+
+    if (links.rowCount === 0)
+      return res.status(404).send({ message: "ShortUrl not found!" });
+
+    await updateVisitCountDB(links.rows[0].visitCount, shortUrl);
+
+    res.redirect(`/urls/open/${links.rows[0].url}`);
   } catch (err) {
     res.status(500).send(err.message);
   }
