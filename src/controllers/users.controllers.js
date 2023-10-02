@@ -1,6 +1,7 @@
 import {
   findSessionByTokenDB,
   findUserInfoDB,
+  findRankingDB,
 } from "../repositories/users.repository.js";
 
 export async function getUsers(req, res) {
@@ -28,6 +29,12 @@ export async function getUsers(req, res) {
 
 export async function getRanking(req, res) {
   try {
+    const ranking = await findRankingDB();
+
+    if (ranking.rowCount === 0)
+      return res.status(401).send({ message: "No links yet!" });
+
+    res.status(200).send(ranking.rows);
   } catch (err) {
     res.status(500).send(err.message);
   }

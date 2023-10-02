@@ -41,3 +41,16 @@ export function findUserInfoDB(id) {
     [id]
   );
 }
+
+export function findRankingDB() {
+  return db.query(
+    `SELECT users.id, users.name, COUNT(urls."shortUrl") 
+	      AS "linksCount", SUM(urls."visitCount") AS "visitCount"
+	    FROM users
+	    JOIN urls ON urls."userId" = users.id
+	    WHERE users.id = urls."userId"
+	    GROUP BY users.id
+	    ORDER BY "visitCount" DESC
+	    LIMIT 10;`
+  );
+}
