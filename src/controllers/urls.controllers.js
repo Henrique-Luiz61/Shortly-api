@@ -31,7 +31,7 @@ export async function postUrls(req, res) {
 
     const shortUrlId = await findShortUrlDB(shortUrl);
 
-    res.status(201).send({ id: shortUrlId.rows[0].id, shortUrl });
+    res.status(201).send({ id: shortUrlId.rows[0].id, shortUrl: shortUrl });
   } catch (err) {
     res.status(500).send(err.message);
   }
